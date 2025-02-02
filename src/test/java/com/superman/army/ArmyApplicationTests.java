@@ -10,4 +10,4 @@ class ArmyApplicationTests {
 	void contextLoads() {
 	}
 
-}
+} 

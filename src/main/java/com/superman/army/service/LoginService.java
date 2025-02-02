@@ -16,4 +16,4 @@ public class LoginService {
                 .filter(m -> m.getPassword().equals(password)) // 비밀번호 비교
                 .orElse(null);  // 비밀번호가 맞지 않거나 회원이 없으면 null 반환
     }
-}
+}  

@@ -10,4 +10,4 @@ public class ArmyApplication {
 		SpringApplication.run(ArmyApplication.class, args);
 	}
 
-}
+} 

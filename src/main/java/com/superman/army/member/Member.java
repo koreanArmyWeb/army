@@ -49,4 +49,4 @@ public class Member {
 	// 기본 생성자 추가
 	public Member() {
 	}
-}
+} 
