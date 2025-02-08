@@ -41,5 +41,14 @@ public class SoldierService {
 		}
 	}
 	
+	public void updateMemberLevelAndDday(Member member) {
+	     long dDay = dDayCalculator(member.getStartDay());
+	     String level = levelCalculator(dDay);
+	        
+	     // Member 객체에 값 반영
+	     member.setDDay(dDay);
+	     member.setLevel(level);
+	 }
+	
 	
 }

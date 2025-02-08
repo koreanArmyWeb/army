@@ -43,6 +43,7 @@ public class SignupController {
 			return "signup/signup";
 		}
 		
+		memberService.updateMember(member);
 		
 		memberRepository.save(member);
 		

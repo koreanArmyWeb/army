@@ -3,151 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>개인정보 약관 동의 및 휴대폰 인증</title>
+    <title>이메일 인증</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-        :root {
-            --bs-primary: #2d6a4f; /* 메인 컬러 그린 */
-        }
+	<style>
+	     :root {
+	         --bs-primary: #2d6a4f;
+	     }
 
-        .navbar, .btn-primary {
-            background-color: var(--bs-primary);
-            padding-top: 15px;
-            padding-bottom: 20px;
-        }
+	     .navbar, .btn-primary {
+	         background-color: var(--bs-primary);
+	         padding-top: 15px;
+	         padding-bottom: 20px;
+	     }
 
-        body {
-            background-color: #f4f7f6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-        }
+	     body {
+	         background-color: #f4f7f6;
+	         min-height: 100vh;
+	         display: flex;
+	         flex-direction: column;
+	         margin: 0;
+	     }
 
-        .main-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+	     .main-content {
+	         flex: 1;
+	         display: flex;
+	         justify-content: center;
+	         align-items: center;
+	     }
 
-        .container {
-            max-width: 500px;
-            width: 100%;
-            padding-top: 10px;
-        }
+	     .container {
+	         max-width: 500px;
+	         width: 100%;
+	         padding-top: 10px;
+	     }
 
-        .card {
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
+	     .card {
+	         padding: 20px;
+	         border-radius: 10px;
+	         margin-bottom: 20px;
+	     }
 
-        .footer {
-            background-color: #2d6a4f;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+	     .footer {
+	         background-color: #2d6a4f;
+	         color: white;
+	         padding: 20px;
+	         text-align: center;
+	     }
 
-        .form-control {
-            margin-bottom: 10px;
-        }
+	     .form-control {
+	         margin-bottom: 10px;
+	     }
 
-        .form-group label {
-            font-weight: bold;
-        }
+	     .btn-primary {
+	         background-color: var(--bs-primary);
+	         border: none;
+	     }
 
-        .form-group input {
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 1rem;
-        }
+	     .btn-primary:hover {
+	         background-color: #1b4d38;
+	     }
 
-        .btn-primary {
-            background-color: var(--bs-primary);
-            border: none;
-        }
+	     .input-group .form-control {
+	         border-radius: 5px;
+	         height: 100%;
+	     }
 
-        .btn-primary:hover {
-            background-color: #1b4d38;
-        }
+	     .input-group .btn {
+	         font-size: 1rem;
+	         border-radius: 5px;
+	         background-color: #ffffff;
+	         border: 1px solid var(--bs-primary);
+	         color: var(--bs-primary);
+	         padding: 8px 15px;
+	         height: 100%;
+	     }
 
-        .input-group {
-            display: flex;
-            align-items: stretch;
-        }
+	     .input-group .btn:hover {
+	         background-color: var(--bs-primary);
+	         color: white;
+	     }
 
-        .input-group .form-control {
-            border-radius: 5px;
-            height: 100%;
-        }
+	     .checkbox-label {
+	         font-size: 0.9rem;
+	     }
 
-        .input-group .btn {
-            font-size: 1rem;
-            border-radius: 5px;
-            background-color: #ffffff;
-            border: 1px solid var(--bs-primary);
-            color: var(--bs-primary);
-            padding: 8px 15px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            height: 100%;
-        }
+	     .error-message {
+	         color: red;
+	         font-size: 0.9rem;
+	         margin-top: 10px;
+	     }
 
-        .input-group .btn:hover {
-            background-color: var(--bs-primary);
-            color: white;
-        }
+	     .auth-links .nav-link {
+	         color: white;
+	         margin-right: 15px;
+	         border-radius: 5px;
+	         transition: background-color 0.3s ease, color 0.3s ease;
+	     }
 
-        .input-group .btn:focus {
-            outline: none;
-            box-shadow: none;
-        }
+	     .auth-links .nav-link.login {
+	         background-color: #e60000;
+	         padding: 8px 9px;
+	     }
 
-        .checkbox-label {
-            font-size: 0.9rem;
-        }
-        
-          /* 로그인, 회원가입 메뉴 스타일 */
-        .auth-links .nav-link {
-            color: white;
-            margin-right: 15px; /* 글씨들 간 간격 추가 */
-            border-radius: 5px;
-            transition: background-color 0.3s ease, color 0.3s ease; /* 자연스러운 색상 변화를 위한 transition */
-        }
+	     .auth-links .nav-link.signup {
+	         background-color: #ffffff;
+	         color: #333;
+	         padding: 7px 8px;
+	     }
 
-        .auth-links .nav-link.login {
-            background-color: #e60000; /* 로그인 배경 빨간색 */
-            padding: 8px 9px;
-        }
+	     .auth-links .nav-link.login:hover {
+	         background-color: #b50000;
+	         color: #fff;
+	     }
 
-        .auth-links .nav-link.signup {
-            background-color: #ffffff; /* 회원가입 배경 하얀색 */
-            color: #333; /* 글씨 색상 */
-            padding: 7px 8px;
-        }
-
-        /* 로그인 버튼 hover 효과 */
-        .auth-links .nav-link.login:hover {
-            background-color: #b50000; /* 로그인 배경 색 변화 */
-            color: #fff;
-        }
-
-        /* 회원가입 버튼 hover 효과 */
-        .auth-links .nav-link.signup:hover {
-            background-color: #e0e0e0; /* 회원가입 배경 색 변화 */
-            color: #333;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
-    </style>
+	     .auth-links .nav-link.signup:hover {
+	         background-color: #e0e0e0;
+	         color: #333;
+	     }
+	 </style>
 </head>
 <body>
-        <!-- 네비게이션 바 -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Korean Army</a>
@@ -155,18 +130,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav left-nav">  <!-- 네비게이션 메뉴 왼쪽 정렬 -->
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">프로필</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">게시판</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">휴가 일정</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">  <!-- 로그인과 회원가입 메뉴 오른쪽 정렬 -->
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item auth-links">
                         <a class="nav-link login" href="/login">로그인</a>
                     </li>
@@ -178,66 +142,107 @@
         </div>
     </nav>
 
-
-    <!-- 개인정보 약관 동의 및 휴대폰 인증 콘텐츠 -->
     <div class="main-content">
         <div class="container">
             <div class="card">
-                <h3 class="card-title text-center">개인정보 약관 동의 및 휴대폰 인증</h3>
-                <form action="/complete-signup" method="POST">
-                    <!-- 개인정보 약관 동의 -->
+				
+				<div class="alert alert-info" th:if="${message}" th:text="${message}"></div>
+				
+                <h3 class="card-title text-center">이메일 인증</h3>
+                <!-- 개인정보 약관 동의 및 이메일 입력 -->
+                <form action="/email/send-code" method="POST" id="sendCodeForm">
                     <div class="form-group">
                         <label for="agreement" class="checkbox-label">
                             <input type="checkbox" id="agreement" name="agreement" required> 개인정보 처리방침에 동의합니다.
                         </label>
                     </div>
-
-                    <!-- 휴대폰 인증 -->
                     <div class="form-group">
-                        <label for="phone">휴대폰 번호:</label>
-                        <input type="text" class="form-control" id="phone" name="phone" placeholder="휴대폰 번호" required>
+                        <label for="email">이메일 입력: </label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="이메일 주소" required>
                     </div>
-
                     <div class="input-group">
-                        <button type="button" class="btn btn-outline-secondary" id="sendCodeBtn">인증번호 전송</button>
+                        <button type="submit" class="btn btn-outline-secondary">인증번호 전송</button>
                     </div>
+                    <div class="error-message" id="errorMessage"></div>
+                </form>
 
-                    <!-- 인증번호 입력 -->
+                <!-- 인증번호 입력 폼 -->
+                <form action="/email/verify-code" method="POST" id="verifyCodeForm" style="display: none;">
                     <div class="form-group mt-3">
                         <label for="authCode">인증번호:</label>
                         <input type="text" class="form-control" id="authCode" name="authCode" placeholder="인증번호를 입력하세요" required>
                     </div>
-
-                    <!-- 인증 버튼 -->
+                    <input type="hidden" name="email" id="emailField">
                     <button type="submit" class="btn btn-primary w-100">인증 완료</button>
                 </form>
 
-                <!-- 오류 메시지 -->
-                <div class="error-message" id="errorMessage">
-                    <!-- 동적 오류 메시지가 여기 나타날 수 있습니다. -->
-                </div>
             </div>
         </div>
     </div>
 
-    <!-- 푸터 -->
     <div class="footer">
         <p>© 2025 Korean Army. All rights reserved.</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        // 인증번호 전송 버튼 클릭 시
-        document.getElementById('sendCodeBtn').addEventListener('click', function() {
-            const phone = document.getElementById('phone').value;
-            
-            if (!phone) {
-                document.getElementById('errorMessage').innerHTML = '휴대폰 번호를 입력해주세요.';
+        document.getElementById('sendCodeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            if (!email) {
+                document.getElementById('errorMessage').textContent = '이메일을 입력해주세요.';
                 return;
             }
-            
-            // 실제로 인증번호 전송 로직을 추가할 수 있습니다.
-            alert('인증번호가 전송되었습니다.');
+
+            // 이메일 인증번호 전송
+            fetch('/email/send-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `email=${email}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);  // 서버 응답 확인을 위한 로그 추가
+                if (data.includes('인증번호가 전송되었습니다.')) {
+                    document.getElementById('emailField').value = email;
+                    alert('인증번호가 이메일로 전송되었습니다!');
+                    // 인증번호 입력 폼을 보이도록 변경
+                    document.getElementById('verifyCodeForm').style.display = 'block';
+                } else {
+                    document.getElementById('errorMessage').textContent = '인증번호 전송에 실패했습니다. 다시 시도해주세요.'; 
+                }
+            })
+            .catch(error => {
+                console.error('인증번호 전송 오류:', error);
+                document.getElementById('errorMessage').textContent = '인증번호 전송 중 오류가 발생했습니다.';
+            });
+        });
+
+        document.getElementById('verifyCodeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('emailField').value;
+            const authCode = document.getElementById('authCode').value;
+
+            // 인증번호 검증
+            fetch('/email/verify-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `email=${email}&authCode=${authCode}`
+            })
+            .then(response => response.text())
+            .then(data => {
+				console.log("서버 응답 데이터:", data); 
+                if (data.includes('인증이 완료되었습니다!')) {
+                    alert('인증이 완료되었습니다!');
+                    window.location.href = '/login/signin';  
+                } else {
+                    alert('인증번호가 일치하지 않습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('인증번호 검증 오류:', error);
+                alert('인증번호 검증 중 오류가 발생했습니다.');
+            });
         });
     </script>
 </body>

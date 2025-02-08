@@ -23,14 +23,16 @@ public class HomeController {
     public String homeLogin(HttpServletRequest request, Model model) {
     	
     	Member member = (Member)sessionManager.getSession(request);
+  
+    	boolean isLoggedIn = (member != null);
     	
-    	if(member == null) {
-    		return "index";
-    	}
-    	
-    	// 로그인 여부를 model에 전달
-        model.addAttribute("isLoggedIn", member != null);
-    	
+    	// 로그인 여부를 model에 전달, member값도
+        model.addAttribute("isLoggedIn", isLoggedIn);
+        
+        if(isLoggedIn) {
+        	model.addAttribute("member", member);
+        }
+        
     	return "index";
     }
     
