@@ -1,0 +1,15 @@
+<form action="/board/save" method="post">
+    <label for="title">제목:</label>
+    <input type="text" id="title" name="title" required>
+    <br>
+
+    <label for="content">내용:</label>
+    <textarea id="content" name="content" required></textarea>
+    <br>
+
+    <label for="writer">작성자:</label>  <!-- ✅ 작성자 입력 필드 추가 -->
+    <input type="text" id="writer" name="writer" required>
+    <br>
+
+    <button type="submit">저장</button>
+</form>

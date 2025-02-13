@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세 보기</title>
+</head>
+<body>
+    <h2>게시글 상세 보기</h2>
+    <p><strong>ID:</strong> <span th:text="${board.id}"></span></p>
+    <p><strong>제목:</strong> <span th:text="${board.title}"></span></p>
+    <p><strong>내용:</strong> <span th:text="${board.content}"></span></p>
+    <br>
+    <a href="/board">목록으로</a>
+</body>
+</html>
