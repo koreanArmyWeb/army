@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>캘린더</title>
+    
+    <style>
+    	.bg_1280px {
+    		width:1280px;
+    		margin:auto;
+    	}
+    	
+    	.fc-toolbar-chunk {
+    	display: flex;
+    	align-items:center;}
+    </style>
+    
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+	
+    <script>
+    // 달력 뷰 스트립트
+    document.addEventListener('DOMContentLoaded', function() {
+    	var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+        	initialView: 'dayGridMonth', // 메인으로 띄울 달력 뷰
+        	titleFormat: function (date) {
+        		return `${date.date.year}년 ${date.date.month + 1}월`;
+        	},
+        	headerToolbar: {
+        		left: 'today',
+        		center: 'prev title next',
+        		right: 'dayGridMonth'
+        	},
+        	navLinks:true, // 다력 일자 클릭할 수 있는 옵션
+        	selectable : true // 달력 셀 선택할 수 있게 하는 옵션
+
+        });
+        
+     calendar.render();
+
+    });
+	
+
+    </script>
+    
+</head>
+<body>
+<div class="bg_1280px">
+    <div id='calendar'></div>
+
+    <!-- 날짜 상세 표시 및 그에 해당하는 스케줄 title, 메모-->
+    
+
+</div>
+</body>
+</html>

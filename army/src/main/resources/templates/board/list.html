@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 목록</title>
+    <link rel="stylesheet" href="/css/style.css">  <!-- ✅ CSS 적용 -->
+</head>
+<body>
+    <h1>게시판 목록</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>제목</th>
+            <th>작성일</th>
+            <th>삭제</th>
+        </tr>
+        <tr th:each="board : ${boards}">
+            <td th:text="${board.id}"></td>
+            <td th:text="${board.title}"></td>
+            <td th:text="${board.createdAt}"></td>
+            <td>
+                <a th:href="@{/board/delete/{id}(id=${board.id})}" class="delete-btn">삭제</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/board/new">새 글 작성</a>
+
+    <script src="/js/script.js"></script>  <!-- ✅ JS 적용 -->
+</body>
+</html>

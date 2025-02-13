@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>캘린더</title>
+    
+    <style>    
+    	.bg_1280px {
+    		width:1280px;
+    		margin:auto;
+    	}
+    	
+    	.fc-toolbar-chunk {
+    	display: flex;
+    	align-items:center;}
+    	
+    	#addFormDiv {
+    		display:none;
+    	}
+    	
+    	.addForm-div {
+    		margin-top:20px;
+    		display:flex;
+    		flex-direction:column;
+    		background-color: rgba(224, 255, 224, 0.6); /* 연한 연두색 (종이 느낌) */
+            border: 2px solid #ccc; /* 연한 테두리 */
+            border-radius:20px;
+    		padding:20px;
+    	}
+    	.addForm-div input,select,textarea,button {
+    		padding:8px;
+    	}
+    	
+    	.addForm-btn-container {
+    		display:flex;
+    		justify-content:flex-end;
+    	}
+    	.addForm-btn {
+    		padding:10px 12px;
+    		background: #f1f3f5;
+    		border-radius: 20px;
+    		border:1px solid #ced4da;
+    		
+    	}
+    	
+    	@font-face {
+		    font-family: 'Ownglyph_ParkDaHyun';
+		    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+    	
+    	#memoDiv {
+    		display:none;
+    	}
+    	.memo-div {
+    		margin:20px 0px 40px 0px;
+            height: 200px;
+            padding: 0px 15px;
+            background-color: rgba(224, 255, 224, 0.6); /* 연한 연두색 (종이 느낌) */
+            border: 2px solid #ccc; /* 연한 테두리 */
+            border-radius:20px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* 살짝 그림자 */
+    	}
+    	.memo-div div {
+    		float:right;
+    		margin:15px 10px 0px 0px;
+    		color: #ccc;
+    		font-size:24px;
+    	}
+    	.memo-content {
+    		font-family: Ownglyph_ParkDaHyun;
+            font-size: 30px;
+            color: #495057;
+            white-space: pre-wrap;
+    	}
+    </style>
+    
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+	
+    <script>
+    
+    // 달력 뷰 스트립트
+    document.addEventListener('DOMContentLoaded', function() {
+    	
+    	var calendarEl = document.getElementById('calendar');
+    	var memoContent = document.getElementById('memoContent');
+    	
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+        	initialView: 'dayGridMonth', // 메인으로 띄울 달력 뷰
+        	titleFormat: function (date) {
+        		return `${date.date.year}년 ${date.date.month + 1}월`;
+        	},
+        	headerToolbar: {
+        		left: 'today',
+        		center: 'prev title next',
+        		right: 'dayGridMonth, addEventButton'
+        	},
+        	navLinks:true, // 다력 일자 클릭할 수 있는 옵션
+        	selectable : true, // 달력 셀 선택할 수 있게 하는 옵션
+        	
+        	
+        	events: function(fetchInfo, successCallback, failureCallback) {
+        		// fullcalendar가 요청한 날짜 범위를 가져와서 API 호출
+        		fetch(`/calendar/api/schedules`)
+        			.then(response => response.json())
+        			.then(data => {
+        				let events = data.map(item => {
+        	                let backgroundColor = 'gray'; // 기본값
+        	                let textColor = 'white'; 
+
+        	                if (item[1] === "휴가") {
+        	                    backgroundColor = 'red';
+        	                    textColor = 'white';
+        	                } else if (item[1] === "월급일") {
+        	                    backgroundColor = 'skyblue';
+        	                    textColor = 'white';
+        	                } else if (item[1] === "진급일") {
+        	                    backgroundColor = 'darkgreen';
+        	                    textColor = 'white';
+        	                }
+
+        	                return {
+        	                    title: item[1],  // 제목
+        	                    start: item[0],  // 시작 날짜
+        	                    extendedProps: { memo: item[2] }, // 메모
+        	                    color: backgroundColor,  // 배경색
+        	                    textColor: textColor  // 글씨색
+        	                };
+        	            }
+        				);
+        				successCallback(events);
+        			})
+        			.catch(error => failureCallback(error));
+        	},
+        	eventClick: function(info) {
+        		memoContent.textContent = info.event.extendedProps.memo || "메모 없음";
+
+        		// 메모 영역을 보이게 설정
+        	    memoDiv.style.display = 'block';
+        	    // 메모 영역으로 부드럽게 스크롤 이동
+        	    memoDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        	}
+
+        	/*
+        	events: [
+        			{title: 'test1',
+	        		start: '2025-03-05'
+	        		},
+	        		{title: 'test2',
+            		start: '2025-02-15',
+            		extendedProps: "기숙사 퇴관하는 날"
+            		},
+        		],
+        	color: 'skyblue',
+        	textColor: 'black'
+			*/
+        	
+        });
+        
+     	calendar.render();
+     	calendar.getEvents();
+     	
+     	// memo 닫기 버튼
+     	var memoClose = document.getElementById('memoDivClose');
+        memoClose.addEventListener('click', function() {
+        	memoDiv.style.display = 'none';
+        });
+
+    });
+    
+    
+    
+ 	// addFormBtn클릭 (폼 열기) 
+ 	function addFormClick() {
+ 		const addForm = document.getElementById('addFormDiv');
+ 		
+ 		if(addForm.style.display === 'none') {
+ 			addForm.style.display = 'block';
+ 			
+ 			addForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+ 		} else {
+ 			addForm.style.display = 'none';
+ 			
+ 		}
+ 	}
+ 	
+ 	function validateForm() {
+ 	    var dateInput = document.getElementById("selected-date").value;
+
+ 	    if (!dateInput) {
+ 	        alert("날짜를 입력해주세요!"); // ✅ 날짜 미입력 시 경고창 표시
+ 	        return false; // ✅ 폼 제출 중단
+ 	    }
+ 	    return true; // ✅ 날짜가 입력되었을 경우 폼 제출 진행
+ 	}
+
+    </script>
+    
+</head>
+<body>
+<div class="bg_1280px">
+	<h1 th:text="${member.name} + '님의 일정'"></h1><hr>
+
+	<!-- 캘린더 뷰 -->
+    <div id='calendar'></div>
+    <br><br>
+
+	<!-- 메모 표시 영역 -->
+	<div id="memoDiv" class="memo-div">
+		<div id="memoDivClose">&#10006;</div>
+		<p id="memoContent" class="memo-content">메모 없음</p>
+	</div>
+	
+	<!-- 스케줄 작성 폼 생성 버튼 -->
+	<div class="addForm-btn-container">
+		<!-- 
+		<button class="schedule-create-btn" onclick="window.location.href='/calendar/add'">&#9998; 스케줄 작성하기</button>
+		 -->
+		
+		<button class="addForm-btn" onclick="addFormClick()">&#9998; 스케줄 작성하기</button>
+	</div>
+	
+	<!-- 스케줄 작성 폼 -->
+	<div id="addFormDiv">
+		<form th:action action="/calendar" method="post" class="addForm-div" onsubmit="return validateForm()">
+	    	<label for="scheduleDate">날짜 선택 : </label>
+	        <input name="scheduleDate" type="date" id="selected-date" placeholder="yyyy-mm-dd"/><br>
+	        <label>스케줄 선택 : </label>
+	        <select name="scheduleTitle">
+	            <option value="휴가">휴가</option>
+	            <option value="월급일">월급</option>
+	            <option value="진급일">진급</option>
+	        </select><br>
+	        <textarea name="memo" placeholder="메모할 내용을 입력하세요." style="height:100px;"></textarea><br>
+	        <button type="submit">저장</button>
+    	</form>
+	</div>
+	
+
+</div>
+</body>
+</html>

@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Component;
 
+import com.superman.army.member.Member;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +24,12 @@ public class SessionManager {
 		//세션 id 생성 후 값을 세션에 저장
 		String sessionId = UUID.randomUUID().toString(); //UUID가 랜덤값 생성하게 해줌
 		sessionStore.put(sessionId, value);
+		
+		// 세션에 userId도 저장 
+	    if (value instanceof Member) {
+	        Member member = (Member) value;
+	        sessionStore.put(sessionId + "_userId", member.getId());  // 세션에 userId를 별도로 저장
+	    }
 		
 		//쿠키 생성
 		Cookie mySessionCookie = new Cookie(SESSION_COOKIE_NAME, sessionId);
